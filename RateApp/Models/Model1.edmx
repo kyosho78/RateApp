@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RatingDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Logins">
+          <Key>
+            <PropertyRef Name="LoginId" />
+          </Key>
+          <Property Name="LoginId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="LoginTime" Type="datetime" />
+          <Property Name="LogoutTime" Type="datetime" />
+          <Property Name="IpAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="SupplierId" Type="int" />
+        </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="RatingId" />
+          </Key>
+          <Property Name="RatingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="SupplierId" Type="int" />
+          <Property Name="RatingValue" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="UpdatedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="UpdatedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="UpdatedAt" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Logins__UserId__46E78A0C">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__Supplie__412EB0B6">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__UserId__403A8C7D">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logins_Suppliers_SupplierId">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logins_Users_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RatingDBModelStoreContainer">
+          <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Logins__UserId__46E78A0C" Association="Self.FK__Logins__UserId__46E78A0C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__Supplie__412EB0B6" Association="Self.FK__Ratings__Supplie__412EB0B6">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__UserId__403A8C7D" Association="Self.FK__Ratings__UserId__403A8C7D">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logins_Suppliers_SupplierId" Association="Self.FK_Logins_Suppliers_SupplierId">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logins_Users_UserId" Association="Self.FK_Logins_Users_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RatingDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Logins">
+          <Key>
+            <PropertyRef Name="LoginId" />
+          </Key>
+          <Property Name="LoginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="LoginTime" Type="DateTime" Precision="3" />
+          <Property Name="LogoutTime" Type="DateTime" Precision="3" />
+          <Property Name="IpAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierId" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Logins__UserId__46E78A0C" FromRole="Logins" ToRole="Users" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.FK_Logins_Suppliers_SupplierId" FromRole="Logins" ToRole="Suppliers" />
+          <NavigationProperty Name="Users1" Relationship="Self.FK_Logins_Users_UserId" FromRole="Logins" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="RatingId" />
+          </Key>
+          <Property Name="RatingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="RatingValue" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.FK__Ratings__Supplie__412EB0B6" FromRole="Ratings" ToRole="Suppliers" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Ratings__UserId__403A8C7D" FromRole="Ratings" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Logins" Relationship="Self.FK_Logins_Suppliers_SupplierId" FromRole="Suppliers" ToRole="Logins" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK__Ratings__Supplie__412EB0B6" FromRole="Suppliers" ToRole="Ratings" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Logins" Relationship="Self.FK__Logins__UserId__46E78A0C" FromRole="Users" ToRole="Logins" />
+          <NavigationProperty Name="Logins1" Relationship="Self.FK_Logins_Users_UserId" FromRole="Users" ToRole="Logins" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK__Ratings__UserId__403A8C7D" FromRole="Users" ToRole="Ratings" />
+        </EntityType>
+        <Association Name="FK__Logins__UserId__46E78A0C">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logins_Suppliers_SupplierId">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logins_Users_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__Supplie__412EB0B6">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__UserId__403A8C7D">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RatingDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Logins" EntityType="Self.Logins" />
+          <EntitySet Name="Ratings" EntityType="Self.Ratings" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__Logins__UserId__46E78A0C" Association="Self.FK__Logins__UserId__46E78A0C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logins_Suppliers_SupplierId" Association="Self.FK_Logins_Suppliers_SupplierId">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logins_Users_UserId" Association="Self.FK_Logins_Users_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__Supplie__412EB0B6" Association="Self.FK__Ratings__Supplie__412EB0B6">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__UserId__403A8C7D" Association="Self.FK__Ratings__UserId__403A8C7D">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RatingDBModelStoreContainer" CdmEntityContainer="RatingDBEntities">
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="RatingDBModel.Logins">
+              <MappingFragment StoreEntitySet="Logins">
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="LogoutTime" ColumnName="LogoutTime" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="RatingDBModel.Ratings">
+              <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="RatingId" ColumnName="RatingId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="RatingValue" ColumnName="RatingValue" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="RatingDBModel.Suppliers">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="RatingDBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
