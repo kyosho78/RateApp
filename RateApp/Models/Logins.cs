@@ -14,15 +14,13 @@ namespace RateApp.Models
     
     public partial class Logins
     {
-        public int LoginId { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public Nullable<System.DateTime> LoginTime { get; set; }
-        public Nullable<System.DateTime> LogoutTime { get; set; }
-        public string IpAddress { get; set; }
-        public Nullable<int> SupplierId { get; set; }
+        public int LoginID { get; set; }
+        public Nullable<int> UserID { get; set; }
+        public Nullable<int> SupplierID { get; set; }
+        public Nullable<System.DateTime> LoginDateTime { get; set; }
+        public Nullable<bool> IsSuccessful { get; set; }
     
-        public virtual Users Users { get; set; }
         public virtual Suppliers Suppliers { get; set; }
-        public virtual Users Users1 { get; set; }
+        public virtual Users Users { get; set; }
     }
 }
