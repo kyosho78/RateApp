@@ -1,22 +1,22 @@
 ﻿<ul class="navbar-nav flex-grow-1">
-    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-    <li>@Html.ActionLink("Register", "Register", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Aloitus sivu", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Meistä", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Yhteistiedot", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Rekisteröidy", "Register", "Account", new { area = "" }, new { @class = "nav-link" })</li>
 
     @if (Session["UserId"] != null)
     {
-        <li><a class="nav-link">Welcome, @Session["UserName"]</a></li>
-        <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+        <li><a class="nav-link">Tervetuloa @Session["UserName"] !</a></li>
+        <li>@Html.ActionLink("Kirjaudu ulos", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
     }
     else if (Session["SupplierId"] != null)
     {
         <li><a class="nav-link">Welcome, @Session["SupplierName"]</a></li>
-        <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Kirjaudu ulos", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
     }
     else
     {
-        <li>@Html.ActionLink("Login", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Kirjaudu sisään", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</li>
     }
 
 </ul>
