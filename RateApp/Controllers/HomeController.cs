@@ -10,10 +10,17 @@ namespace RateApp.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (Session["UserId"] != null || Session["SupplierId"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
-        public ActionResult About()
+            public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 

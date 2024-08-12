@@ -1,6 +1,7 @@
 ﻿using RateApp.Models;
 using RateApp.ViewModels;
 using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Mvc;
@@ -72,6 +73,60 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
                 return Convert.ToBase64String(bytes);
             }
         }
+
+        // GET: Account/Login
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: Account/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var hashedPassword = HashPassword(model.PasswordHash); // Hash the entered password
+
+                // Check if the user exists in the Users table
+                var user = db_context.Users.FirstOrDefault(u => u.Email == model.Email && u.PasswordHash == hashedPassword);
+                if (user != null)
+                {
+                    // Set session for user
+                    Session["UserId"] = user.UserId.ToString();
+                    Session["UserName"] = user.UserName.ToString();
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                // Check if the supplier exists in the Suppliers table
+                var supplier = db_context.Suppliers.FirstOrDefault(s => s.Email == model.Email && s.PasswordHash == hashedPassword);
+                if (supplier != null)
+                {
+                    // Set session for supplier
+                    Session["SupplierId"] = supplier.SupplierId.ToString();
+                    Session["SupplierName"] = supplier.SupplierName.ToString();
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                // If no user or supplier found, show error
+                ModelState.AddModelError("", "Invalid email or password.");
+            }
+
+            return View(model);
+        }
+
+
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

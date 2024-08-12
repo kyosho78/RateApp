@@ -1,5 +1,24 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    var userId = Session["UserId"];
+}
+
+<h2>Welcome to RateApp</h2>
+
+@if (userId == null)
+{
+    <div>
+        <h3>Login</h3>
+        @Html.Action("Login", "Account")
+    </div>
+}
+else
+{
+    <div>
+        <h3>Welcome, @Session["UserName"]!</h3>
+        <p>You are logged in.</p>
+        <a href="@Url.Action("Logout", "Account")">Logout</a>
+    </div>
 }
 
 <main>
