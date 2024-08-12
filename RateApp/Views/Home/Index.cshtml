@@ -3,7 +3,7 @@
     var userId = Session["UserId"];
 }
 
-<h2>Welcome to RateApp</h2>
+<h2>Welcome to RateApp, @Session["UserName"]!</h2>
 
 @if (userId == null)
 {
@@ -12,14 +12,7 @@
         @Html.Action("Login", "Account")
     </div>
 }
-else
-{
-    <div>
-        <h3>Welcome, @Session["UserName"]!</h3>
-        <p>You are logged in.</p>
-        <a href="@Url.Action("Logout", "Account")">Logout</a>
-    </div>
-}
+
 
 <main>
     <section class="row" aria-labelledby="aspnetTitle">
