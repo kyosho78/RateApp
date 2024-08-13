@@ -30,6 +30,8 @@ namespace RateApp.Models
         public string City { get; set; }
         public string Country { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
+        public string ResetToken { get; set; }
+        public Nullable<System.DateTime> ResetTokenExpiry { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Logins> Logins { get; set; }

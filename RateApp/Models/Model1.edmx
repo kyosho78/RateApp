@@ -40,6 +40,8 @@
           <Property Name="City" Type="nvarchar" MaxLength="100" />
           <Property Name="Country" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="ResetToken" Type="nvarchar" MaxLength="255" />
+          <Property Name="ResetTokenExpiry" Type="datetime" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -54,6 +56,8 @@
           <Property Name="City" Type="nvarchar" MaxLength="100" />
           <Property Name="Country" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="ResetToken" Type="nvarchar" MaxLength="255" />
+          <Property Name="ResetTokenExpiry" Type="datetime" />
         </EntityType>
         <Association Name="FK__Logins__Supplier__46E78A0C">
           <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
@@ -192,6 +196,8 @@
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Logins" Relationship="RatingDBModel.FK__Logins__Supplier__46E78A0C" FromRole="Suppliers" ToRole="Logins" />
           <NavigationProperty Name="Ratings" Relationship="RatingDBModel.FK__Ratings__Supplie__403A8C7D" FromRole="Suppliers" ToRole="Ratings" />
+          <Property Name="ResetToken" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ResetTokenExpiry" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -208,6 +214,8 @@
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Logins" Relationship="RatingDBModel.FK__Logins__UserID__45F365D3" FromRole="Users" ToRole="Logins" />
           <NavigationProperty Name="Ratings" Relationship="RatingDBModel.FK__Ratings__UserId__3F466844" FromRole="Users" ToRole="Ratings" />
+          <Property Name="ResetToken" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ResetTokenExpiry" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK__Logins__Supplier__46E78A0C">
           <End Type="RatingDBModel.Suppliers" Role="Suppliers" Multiplicity="0..1" />
@@ -290,6 +298,8 @@
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="RatingDBModel.Suppliers">
               <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="ResetTokenExpiry" ColumnName="ResetTokenExpiry" />
+                <ScalarProperty Name="ResetToken" ColumnName="ResetToken" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="City" ColumnName="City" />
@@ -305,6 +315,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="RatingDBModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ResetTokenExpiry" ColumnName="ResetTokenExpiry" />
+                <ScalarProperty Name="ResetToken" ColumnName="ResetToken" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="City" ColumnName="City" />
