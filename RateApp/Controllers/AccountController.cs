@@ -7,9 +7,12 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Services.Description;
+using System.Configuration;
 
 namespace RateApp.Controllers // Make sure the namespace matches your project's namespace
 {
+
+
     public class AccountController : Controller
     {
         private RatingDBEntities db_context = new RatingDBEntities();
@@ -257,10 +260,13 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
                           System.Security.Cryptography.X509Certificates.X509Chain chain,
                           System.Net.Security.SslPolicyErrors sslPolicyErrors) { return true; };
 
+            var smtpUser = ConfigurationManager.AppSettings["SmtpUser"];
+            var smtpPassword = ConfigurationManager.AppSettings["SmtpPassword"];
+
             using (var client = new SmtpClient("mail.wbservice.fi"))
             {
                 client.Port = 587;
-                client.Credentials = new System.Net.NetworkCredential("walter@wbservice.fi", "Kefir2016");
+                client.Credentials = new System.Net.NetworkCredential(smtpUser, smtpPassword);
                 client.EnableSsl = true;
 
                 var mailMessage = new MailMessage();
