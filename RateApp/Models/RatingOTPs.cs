@@ -12,15 +12,15 @@ namespace RateApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Ratings
+    public partial class RatingOTPs
     {
-        public int RatingId { get; set; }
-        public Nullable<int> UserId { get; set; }
+        public int OTPId { get; set; }
+        public int UserId { get; set; }
         public Nullable<int> SupplierId { get; set; }
-        public Nullable<int> RatingValue { get; set; }
-        public string Comment { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
-        public Nullable<System.DateTime> UpdatedAt { get; set; }
+        public string OTP { get; set; }
+        public System.DateTime GeneratedAt { get; set; }
+        public System.DateTime ExpiresAt { get; set; }
+        public bool IsUsed { get; set; }
     
         public virtual Suppliers Suppliers { get; set; }
         public virtual Users Users { get; set; }

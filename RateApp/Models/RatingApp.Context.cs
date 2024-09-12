@@ -13,10 +13,10 @@ namespace RateApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RatingDBEntities : DbContext
+    public partial class RatingDBEntities1 : DbContext
     {
-        public RatingDBEntities()
-            : base("name=RatingDBEntities")
+        public RatingDBEntities1()
+            : base("name=RatingDBEntities1")
         {
         }
     
@@ -26,8 +26,11 @@ namespace RateApp.Models
         }
     
         public virtual DbSet<Logins> Logins { get; set; }
-        public virtual DbSet<Ratings> Ratings { get; set; }
+        public virtual DbSet<RatingOTPs> RatingOTPs { get; set; }
+        public virtual DbSet<SupplierRatings> SupplierRatings { get; set; }
         public virtual DbSet<Suppliers> Suppliers { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<UserRatings> UserRatings { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }
 }

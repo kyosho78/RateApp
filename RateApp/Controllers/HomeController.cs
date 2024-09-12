@@ -22,14 +22,14 @@ namespace RateApp.Controllers
 
             public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Meistä";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Yhteystiedot";
 
             return View();
         }

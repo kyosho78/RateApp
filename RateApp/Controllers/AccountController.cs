@@ -15,8 +15,8 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
 
     public class AccountController : Controller
     {
-        private RatingDBEntities db_context = new RatingDBEntities();
-        
+        private RatingDBEntities1 db_context = new RatingDBEntities1();
+
 
         // GET: Account/Register
         public ActionResult Register()
@@ -100,7 +100,7 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
                 if (user != null)
                 {
                     // Set session for user
-                    Session["UserId"] = user.UserId.ToString();
+                    Session["UserId"] = user.UserId;
                     Session["UserName"] = user.UserName.ToString();
 
                     return RedirectToAction("Index", "Home");
@@ -111,7 +111,7 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
                 if (supplier != null)
                 {
                     // Set session for supplier
-                    Session["SupplierId"] = supplier.SupplierId.ToString();
+                    Session["SupplierId"] = supplier.SupplierId;
                     Session["SupplierName"] = supplier.SupplierName.ToString();
 
                     return RedirectToAction("Index", "Home");

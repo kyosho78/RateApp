@@ -1,0 +1,33 @@
+﻿@model IEnumerable<RateApp.Models.SupplierRatings>
+
+@{
+    ViewBag.Title = "Supplier Ratings";
+}
+
+<h2>Supplier Ratings</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Supplier</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rating in Model)
+        {
+            <tr>
+                <td>@rating.Suppliers.SupplierName</td>
+                <td>@rating.RatingValue</td>
+                <td>@rating.Comment</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = rating.RatingId }) |
+                    @Html.ActionLink("Details", "Details", new { id = rating.RatingId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = rating.RatingId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
