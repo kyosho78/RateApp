@@ -10,6 +10,7 @@ namespace RateApp.ViewModels
     {
         [Required]
         [EmailAddress]
+        [Display(Name = "Sähköpostiosoite:")]
         public string Email { get; set; }
     }
 }

@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1>Hei! Tervetuloa Suosittelija.fi sivuille!</h1>
+<p>Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.</p>
+<p>Rekisteröidy ja kirjaudu sisään, jotta voit antaa suosituksia ja lukea muiden antamia suosituksia.</p>
+
 <h2>Kirjaudu sisään tai rekisteröidy</h2>
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -41,9 +45,10 @@
             <a href="@Url.Action("Register", "Account")" class="btn btn-dark" style="margin-left: 10px;">Rekisteröidy</a>
         </div>
     </div>
+    <p></p>
 
     <p>
-        <a href="@Url.Action("ForgotPassword", "Account")">Forgot your password?</a>
+        <a href="@Url.Action("ForgotPassword", "Account")">Unohditko käyttäjä tunnukset tai salasanan?</a>
     </p>
 
 

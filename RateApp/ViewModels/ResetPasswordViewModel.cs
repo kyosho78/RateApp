@@ -19,5 +19,7 @@ namespace RateApp.ViewModels
         [DataType(DataType.Password)]
         [Compare("PasswordHash", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
     }
 }

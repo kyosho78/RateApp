@@ -173,13 +173,13 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
 
                     // Send an email with the reset link
                     string resetLink = Url.Action("ResetPassword", "Account", new { token = token }, Request.Url.Scheme);
-                    SendEmail(model.Email, "Password Reset", $"Please reset your password by clicking <a href='{resetLink}'>here</a>");
+                    SendEmail(model.Email, "Salasanan nollaus, Suosittelija.fi sivuille", $"Voit nollata salasanasi tästä linkistä: <a href='{resetLink}'>Paina tästä!</a>");
 
                     return RedirectToAction("ForgotPasswordConfirmation");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "No user found with that email address.");
+                    ModelState.AddModelError("", "Sähköpostia ei löytynyt!");
                 }
             }
 
