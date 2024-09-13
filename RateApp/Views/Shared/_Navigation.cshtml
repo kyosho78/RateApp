@@ -4,14 +4,14 @@
     <li>@Html.ActionLink("Yhteistiedot", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
     <li>@Html.ActionLink("Rekisteröidy", "Register", "Account", new { area = "" }, new { @class = "nav-link" })</li>
 
-    @if (Session["UserId"] != null)
+    @if (Session["UserRole"] != null && Session["UserRole"].ToString() == "User")
     {
         <li><a class="nav-link">Tervetuloa @Session["UserName"] !</a></li>
         <li>@Html.ActionLink("Kirjaudu ulos", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
     }
-    else if (Session["SupplierId"] != null)
+    else if (Session["UserRole"] != null && Session["UserRole"].ToString() == "Supplier")
     {
-        <li><a class="nav-link">Welcome, @Session["SupplierName"]</a></li>
+        <li><a class="nav-link">Tervetuloa @Session["SupplierName"]</a></li>
         <li>@Html.ActionLink("Kirjaudu ulos", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
     }
     else

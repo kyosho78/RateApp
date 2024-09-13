@@ -1,0 +1,66 @@
+﻿@model RateApp.Models.UserRatings
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserRatings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RatingValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RatingValue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Users.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Users1.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users1.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RatingId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

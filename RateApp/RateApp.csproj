@@ -132,6 +132,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SupplierRatingsController.cs" />
+    <Compile Include="Controllers\UserRatingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -178,6 +179,7 @@
     <Compile Include="ViewModels\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\SupplierRatingViewModel.cs" />
+    <Compile Include="ViewModels\UserRatingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Antlr3.Runtime.dll" />
@@ -351,6 +353,11 @@
     <Content Include="Views\SupplierRatings\Details.cshtml" />
     <Content Include="Views\SupplierRatings\Edit.cshtml" />
     <Content Include="Views\SupplierRatings\Index.cshtml" />
+    <Content Include="Views\UserRatings\Create.cshtml" />
+    <Content Include="Views\UserRatings\Delete.cshtml" />
+    <Content Include="Views\UserRatings\Details.cshtml" />
+    <Content Include="Views\UserRatings\Edit.cshtml" />
+    <Content Include="Views\UserRatings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

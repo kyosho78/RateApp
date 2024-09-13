@@ -102,6 +102,7 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
                     // Set session for user
                     Session["UserId"] = user.UserId;
                     Session["UserName"] = user.UserName.ToString();
+                    Session["UserRole"] = "User";  // Set session to indicate the role
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -113,6 +114,7 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
                     // Set session for supplier
                     Session["SupplierId"] = supplier.SupplierId;
                     Session["SupplierName"] = supplier.SupplierName.ToString();
+                    Session["UserRole"] = "Supplier";  // Set session to indicate the role
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -123,6 +125,7 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
 
             return View(model);
         }
+
 
 
 

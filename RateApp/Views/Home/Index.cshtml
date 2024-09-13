@@ -1,30 +1,42 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-    var userId = Session["UserId"];
+    var userRole = Session["UserRole"];  // Check the role from the session
 }
 
-<h2>Tervetuloa Suosittelijaan!</h2>
+<h1>Tervetuloa Suosittelijaan!</h1>
 
-@if (userId == null)
+@if (userRole == null)
 {
     <div>
         <h3>Login</h3>
         @Html.Action("Login", "Account")
     </div>
 }
-
+else if (userRole.ToString() == "User")
+{
+    <div>
+        <p>Olet nyt kirjautunut sisään @Session["UserName"]!</p>
+    </div>
+}
+else if (userRole.ToString() == "Supplier")
+{
+    <div>
+        <p>Olet nyt kirjautunut sisään @Session["SupplierName"]!</p>
+    </div>
+}
 
 <main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">Suosittelija.fi</h1>
-        <p class="lead">Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.</p>
-    </section>
-    <p></p>
-    <p></p>
-
-    <div class="row">
+    @if (userRole == null)
+    {
+        <div>
+            <p>Kirjaudu sisään, jotta voit antaa tai vastaanottaa suosituksia.</p>
+        </div>
+    }
+    else if (userRole.ToString() == "User")
+    {
+        <!-- Show Supplier Rating Section for Regular Users -->
         <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Suosittele</h2>
+            <h2 id="gettingStartedTitle">Suosittele suosittelijaa!</h2>
             <p>
                 Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.
                 Sinun tulee ensin rekisteröityä ja kirjautua sisään.
@@ -33,17 +45,21 @@
                 Henkilö antaa sinulle käyttäjätunnuksen ja kertakäyttöisen koodin, joilla pääset antamaan suosituksen.
             </p>
             <a href="/SupplierRatings/Create" class="btn btn-outline-dark">Anna suositus</a>
-
         </section>
+    }
+    else if (userRole.ToString() == "Supplier")
+    {
+        <!-- Show User Rating Section for Suppliers -->
         <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+            <h2 id="librariesTitle">Suosittele hakijaa</h2>
+            <p>
+                Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.
+                Sinun tulee ensin rekisteröityä ja kirjautua sisään.
+                Sen jälkeen voit sekä antaa suosituksia että lukea muiden antamia suosituksia.
+                Muista aina kysyä suosituksen saaneelta henkilöltä, onko hän antanut luvan suosituksen antamiseen.
+                Henkilö antaa sinulle käyttäjätunnuksen ja kertakäyttöisen koodin, joilla pääset antamaan suosituksen.
+            </p>
+            <a href="/UserRatings/Create" class="btn btn-outline-dark">Anna suositus</a>
         </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
-    </div>
+    }
 </main>
