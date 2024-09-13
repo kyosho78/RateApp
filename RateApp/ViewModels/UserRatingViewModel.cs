@@ -15,6 +15,7 @@ namespace RateApp.Models
         public int RaterId { get; internal set; }
         public object RatedUserId { get; internal set; }
 
-        // You can add more properties if needed, like the current user's ID
+        [Required]
+        public string OTP { get; set; }
     }
 }

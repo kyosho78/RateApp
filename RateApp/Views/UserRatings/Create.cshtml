@@ -1,21 +1,20 @@
-﻿@model RateApp.Models.UserRatings
+﻿@model RateApp.Models.UserRatingViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create User Rating";
 }
 
 <h2>Create User Rating</h2>
-
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        @Html.LabelFor(model => model.UserId, "User")
-        @Html.DropDownListFor(model => model.UserId, (SelectList)ViewBag.UserId, "Select User", new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.UserId)
+        @Html.Label("OTP")
+        @Html.TextBox("OTP", null, new { @class = "form-control" })
+        <p class="text-muted">Please enter the OTP you received from the supplier.</p>
+        @Html.ValidationMessage("OTP")
     </div>
 
     <div class="form-group">

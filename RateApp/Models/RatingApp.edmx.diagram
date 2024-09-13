@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="9c31c722c78d4759ba22be3f25134da6" Name="Diagram1">
         <EntityTypeShape EntityType="RatingDBModel.Logins" Width="1.5" PointX="3" PointY="2.75" />
-        <EntityTypeShape EntityType="RatingDBModel.RatingOTPs" Width="1.5" PointX="3" PointY="6.5" />
+        <EntityTypeShape EntityType="RatingDBModel.RatingOTPs" Width="1.5" PointX="3.25" PointY="6" />
         <EntityTypeShape EntityType="RatingDBModel.SupplierRatings" Width="1.5" PointX="6" PointY="6.5" />
         <EntityTypeShape EntityType="RatingDBModel.Suppliers" Width="1.5" PointX="0.75" PointY="1" />
         <EntityTypeShape EntityType="RatingDBModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" />

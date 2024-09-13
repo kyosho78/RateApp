@@ -47,29 +47,45 @@ namespace RateApp.Controllers
         // POST: UserRatings/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UserRatingViewModel model)
+        public ActionResult SubmitRating(UserRatingViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Ensure the user is logged in and has a valid session
-                if (Session["UserId"] == null)
+                // Validate OTP
+                var otpEntry = db.RatingOTPs.FirstOrDefault(o => o.OTP == model.OTP
+                     && o.UserId == (int)model.RatedUserId
+                     && o.IsUsed == false
+                     && o.ExpiresAt > DateTime.Now);
+
+                if (otpEntry == null)
                 {
-                    return RedirectToAction("Login", "Account");  // Redirect to login if session is not found
+                    ModelState.AddModelError("", "Invalid or expired OTP.");
+                    return View(model);
                 }
 
-                int raterId = Convert.ToInt32(Session["UserId"]);  // Fetch the RaterId from the session
-
-                var userRatings = new UserRatings
+                // OTP is valid, proceed with rating
+                if (Session["UserId"] == null)
                 {
-                    RatedUserId = model.RatedUserId,  // ID of the user being rated
-                    RaterId = raterId,                // Set the RaterId based on the logged-in user
+                    return RedirectToAction("Login", "Account"); // Ensure the user is logged in
+                }
+
+                int raterId = (int)Session["UserId"]; // Get logged-in user's ID
+
+                var userRating = new UserRatings
+                {
+                    RatedUserId = model.RatedUserId,
+                    RaterId = raterId, // Assign the logged-in user as the rater
                     RatingValue = model.RatingValue,
                     Comment = model.Comment,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 };
 
-                db.UserRatings.Add(userRatings);
+                db.UserRatings.Add(userRating);
+                db.SaveChanges();
+
+                // Mark OTP as used
+                otpEntry.IsUsed = true;
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -78,6 +94,7 @@ namespace RateApp.Controllers
             ViewBag.RatedUserId = new SelectList(db.Users, "UserId", "UserName", model.RatedUserId);
             return View(model);
         }
+
 
 
         // GET: UserRatings/Edit/5

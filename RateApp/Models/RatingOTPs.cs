@@ -15,7 +15,7 @@ namespace RateApp.Models
     public partial class RatingOTPs
     {
         public int OTPId { get; set; }
-        public int UserId { get; set; }
+        public Nullable<int> UserId { get; set; }
         public Nullable<int> SupplierId { get; set; }
         public string OTP { get; set; }
         public System.DateTime GeneratedAt { get; set; }

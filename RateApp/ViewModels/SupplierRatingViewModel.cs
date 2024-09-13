@@ -14,6 +14,7 @@ namespace RateApp.Models
         public int SupplierId { get; set; }  // This will keep track of the supplier being rated
         public int RaterId { get; internal set; }
 
-        // You can add more properties if needed, like the current user's ID
+        [Required]
+        public string OTP { get; set; }
     }
 }

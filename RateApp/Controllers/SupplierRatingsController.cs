@@ -43,25 +43,40 @@ namespace RateApp.Controllers
             return View();
         }
 
+
+
+
+        // POST: SupplierRatings/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SupplierRatingViewModel model)
+        public ActionResult SubmitRating(SupplierRatingViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Check if the user is logged in
-                if (Session["UserId"] == null)
+                // Validate OTP
+                var otpEntry = db.RatingOTPs.FirstOrDefault(o => o.OTP == model.OTP
+                        && o.SupplierId == model.SupplierId
+                        && o.IsUsed == false
+                        && o.ExpiresAt > DateTime.Now);
+
+                if (otpEntry == null)
                 {
-                    // Redirect to login page if the user is not logged in
-                    return RedirectToAction("Login", "Account");
+                    ModelState.AddModelError("", "Invalid or expired OTP.");
+                    return View(model);
                 }
 
-                int raterId = (int)Session["UserId"];  // Fetch user ID from session
+                // OTP is valid, proceed with rating
+                if (Session["UserId"] == null)
+                {
+                    return RedirectToAction("Login", "Account"); // Ensure the user is logged in
+                }
+
+                int raterId = (int)Session["UserId"]; // Get logged-in user's ID
 
                 var supplierRating = new SupplierRatings
                 {
                     SupplierId = model.SupplierId,
-                    RaterId = raterId,  // Set the RaterId based on the current logged-in user
+                    RaterId = raterId, // Assign the logged-in user as the rater
                     RatingValue = model.RatingValue,
                     Comment = model.Comment,
                     CreatedAt = DateTime.Now,
@@ -70,12 +85,18 @@ namespace RateApp.Controllers
 
                 db.SupplierRatings.Add(supplierRating);
                 db.SaveChanges();
+
+                // Mark OTP as used
+                otpEntry.IsUsed = true;
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
             ViewBag.SupplierId = new SelectList(db.Suppliers, "SupplierId", "SupplierName", model.SupplierId);
             return View(model);
         }
+
 
 
 

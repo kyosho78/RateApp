@@ -62,4 +62,19 @@ else if (userRole.ToString() == "Supplier")
             <a href="/UserRatings/Create" class="btn btn-outline-dark">Anna suositus</a>
         </section>
     }
+
+
+    @if (Session["UserId"] != null)
+    {
+        <h3>Generate an OTP</h3>
+        <p>Click below to generate a code that someone can use to rate you.</p>
+        @Html.ActionLink("Generate OTP", "GenerateOTP", "RatingOTPs", new { userId = Session["UserId"], supplierId = (int?)null }, new { @class = "btn btn-primary" })
+    }
+    else if (Session["SupplierId"] != null)
+    {
+        <h3>Generate an OTP</h3>
+        <p>Click below to generate a code that someone can use to rate you.</p>
+        @Html.ActionLink("Generate OTP", "GenerateOTP", "RatingOTPs", new { userId = (int?)null, supplierId = Session["SupplierId"] }, new { @class = "btn btn-primary" })
+    }
+
 </main>

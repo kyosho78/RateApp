@@ -11,9 +11,10 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        @Html.LabelFor(model => model.SupplierId, "Supplier")
-        @Html.DropDownListFor(model => model.SupplierId, (SelectList)ViewBag.SupplierId, "Select Supplier", new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.SupplierId)
+        @Html.Label("OTP")
+        @Html.TextBox("OTP", null, new { @class = "form-control" })
+        <p class="text-muted">Please enter the OTP you received from the supplier.</p>
+        @Html.ValidationMessage("OTP")
     </div>
 
     <div class="form-group">
