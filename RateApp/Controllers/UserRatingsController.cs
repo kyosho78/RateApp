@@ -61,7 +61,6 @@ namespace RateApp.Controllers
                 }
             }
 
-            System.Diagnostics.Debug.WriteLine("ModelState.IsValid: " + ModelState.IsValid);
 
             // Check if ModelState is valid
             if (ModelState.IsValid)
@@ -69,7 +68,6 @@ namespace RateApp.Controllers
                 // Check if the supplier is logged in
                 if (Session["SupplierId"] == null)
                 {
-                    System.Diagnostics.Debug.WriteLine("Supplier is not logged in. Redirecting to login.");
                     // Redirect to login page if the supplier is not logged in
                     return RedirectToAction("Login", "Account");
                 }
@@ -80,13 +78,6 @@ namespace RateApp.Controllers
                 {
                     raterId = Convert.ToInt32(Session["SupplierId"]);
                 }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine("Rater ID is missing in session.");
-                    return RedirectToAction("Login", "Account");
-                }
-
-                System.Diagnostics.Debug.WriteLine($"Rater ID (Supplier) from session: {raterId}");
 
                 // Validate OTP
                 var otpEntry = db.RatingOTPs.FirstOrDefault(o => o.OTP == model.OTP
@@ -95,7 +86,6 @@ namespace RateApp.Controllers
 
                 if (otpEntry == null)
                 {
-                    System.Diagnostics.Debug.WriteLine("Invalid or expired OTP.");
                     ModelState.AddModelError("", "Invalid or expired OTP.");
                     return View(model);
                 }
@@ -104,17 +94,9 @@ namespace RateApp.Controllers
                 int userId = otpEntry.UserId ?? 0; // Get the user ID from the OTP
                 if (userId == 0)
                 {
-                    System.Diagnostics.Debug.WriteLine("Invalid user ID.");
                     ModelState.AddModelError("", "Invalid user ID.");
                     return View(model);
                 }
-
-                // Debug: Check rating details before saving
-                System.Diagnostics.Debug.WriteLine("Creating user rating...");
-                System.Diagnostics.Debug.WriteLine($"UserId: {userId}");
-                System.Diagnostics.Debug.WriteLine($"RaterId: {raterId}");
-                System.Diagnostics.Debug.WriteLine($"RatingValue: {model.RatingValue}");
-                System.Diagnostics.Debug.WriteLine($"Comment: {model.Comment}");
 
                 // Create a new UserRatings object
                 var userRating = new UserRatings
@@ -127,26 +109,21 @@ namespace RateApp.Controllers
                     UpdatedAt = DateTime.Now
                 };
 
-                try
-                {
+
                     // Add the rating to the database
-                    db.UserRatings.Add(userRating);
-                    db.SaveChanges(); // Attempt to save to the database
-                    System.Diagnostics.Debug.WriteLine("User rating successfully saved to the database.");
+                db.UserRatings.Add(userRating);
+                db.SaveChanges(); // Attempt to save to the database
 
-                    // Mark OTP as used
-                    otpEntry.IsUsed = true;
-                    db.SaveChanges(); // Save the change to OTP status
+                   // Mark OTP as used
+                otpEntry.IsUsed = true;
+                db.SaveChanges(); // Save the change to OTP status
 
-                    return RedirectToAction("Index");
-                }
-                catch (Exception ex)
-                {
-                    // Log any exceptions that occur during the SaveChanges call
-                    System.Diagnostics.Debug.WriteLine("Error during SaveChanges: " + ex.Message);
-                    System.Diagnostics.Debug.WriteLine("Stack Trace: " + ex.StackTrace);
-                    ModelState.AddModelError("", "Error saving the rating. Please try again.");
-                }
+                System.Diagnostics.Debug.WriteLine("User rating successfully saved to the database.");
+
+
+
+                return RedirectToAction("Index");
+
             }
 
             // If ModelState is not valid or saving fails, return the form with errors
