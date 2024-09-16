@@ -46,37 +46,53 @@ namespace RateApp.Controllers
 
 
 
-        // POST: SupplierRatings/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitRating(SupplierRatingViewModel model)
+        public ActionResult Create(SupplierRatingViewModel model)
         {
+            foreach (var key in ModelState.Keys)
+            {
+                var state = ModelState[key];
+                foreach (var error in state.Errors)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Key: {key}, Error: {error.ErrorMessage}");
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                // Validate OTP
+                // Check if the user is logged in
+                if (Session["UserId"] == null)
+                {
+                    // Redirect to login page if the user is not logged in
+                    return RedirectToAction("Login", "Account");
+                }
+
+                // Validate OTP and fetch SupplierId
                 var otpEntry = db.RatingOTPs.FirstOrDefault(o => o.OTP == model.OTP
-                        && o.SupplierId == model.SupplierId
-                        && o.IsUsed == false
-                        && o.ExpiresAt > DateTime.Now);
+                                && o.IsUsed == false
+                                && o.ExpiresAt > DateTime.Now);
 
                 if (otpEntry == null)
                 {
                     ModelState.AddModelError("", "Invalid or expired OTP.");
+                    return View(model); // Show error on the view
+                }
+
+                // OTP is valid, retrieve the supplier ID
+                int supplierId = otpEntry.SupplierId ?? 0;
+                if (supplierId == 0)
+                {
+                    ModelState.AddModelError("", "Invalid Supplier.");
                     return View(model);
                 }
 
-                // OTP is valid, proceed with rating
-                if (Session["UserId"] == null)
-                {
-                    return RedirectToAction("Login", "Account"); // Ensure the user is logged in
-                }
-
-                int raterId = (int)Session["UserId"]; // Get logged-in user's ID
+                int raterId = (int)Session["UserId"];  // Fetch user ID from session
 
                 var supplierRating = new SupplierRatings
                 {
-                    SupplierId = model.SupplierId,
-                    RaterId = raterId, // Assign the logged-in user as the rater
+                    SupplierId = supplierId,
+                    RaterId = raterId,  // Set the RaterId based on the current logged-in user
                     RatingValue = model.RatingValue,
                     Comment = model.Comment,
                     CreatedAt = DateTime.Now,
@@ -90,12 +106,16 @@ namespace RateApp.Controllers
                 otpEntry.IsUsed = true;
                 db.SaveChanges();
 
+                System.Diagnostics.Debug.WriteLine("Rating successfully saved!");
+
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SupplierId = new SelectList(db.Suppliers, "SupplierId", "SupplierName", model.SupplierId);
             return View(model);
         }
+
+
+
 
 
 

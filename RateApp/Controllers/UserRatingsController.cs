@@ -44,56 +44,118 @@ namespace RateApp.Controllers
             return View();
         }
 
+
+
         // POST: UserRatings/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitRating(UserRatingViewModel model)
+        public ActionResult Create(UserRatingViewModel model)
         {
+            // Debug: Log all validation errors
+            foreach (var key in ModelState.Keys)
+            {
+                var state = ModelState[key];
+                foreach (var error in state.Errors)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Key: {key}, Error: {error.ErrorMessage}");
+                }
+            }
+
+            System.Diagnostics.Debug.WriteLine("ModelState.IsValid: " + ModelState.IsValid);
+
+            // Check if ModelState is valid
             if (ModelState.IsValid)
             {
+                // Check if the supplier is logged in
+                if (Session["SupplierId"] == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Supplier is not logged in. Redirecting to login.");
+                    // Redirect to login page if the supplier is not logged in
+                    return RedirectToAction("Login", "Account");
+                }
+
+                // Fetch supplier ID from session
+                int raterId = 0;
+                if (Session["SupplierId"] != null)
+                {
+                    raterId = Convert.ToInt32(Session["SupplierId"]);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Rater ID is missing in session.");
+                    return RedirectToAction("Login", "Account");
+                }
+
+                System.Diagnostics.Debug.WriteLine($"Rater ID (Supplier) from session: {raterId}");
+
                 // Validate OTP
                 var otpEntry = db.RatingOTPs.FirstOrDefault(o => o.OTP == model.OTP
-                     && o.UserId == (int)model.RatedUserId
-                     && o.IsUsed == false
-                     && o.ExpiresAt > DateTime.Now);
+                             && o.IsUsed == false
+                             && o.ExpiresAt > DateTime.Now);
 
                 if (otpEntry == null)
                 {
+                    System.Diagnostics.Debug.WriteLine("Invalid or expired OTP.");
                     ModelState.AddModelError("", "Invalid or expired OTP.");
                     return View(model);
                 }
 
                 // OTP is valid, proceed with rating
-                if (Session["UserId"] == null)
+                int userId = otpEntry.UserId ?? 0; // Get the user ID from the OTP
+                if (userId == 0)
                 {
-                    return RedirectToAction("Login", "Account"); // Ensure the user is logged in
+                    System.Diagnostics.Debug.WriteLine("Invalid user ID.");
+                    ModelState.AddModelError("", "Invalid user ID.");
+                    return View(model);
                 }
 
-                int raterId = (int)Session["UserId"]; // Get logged-in user's ID
+                // Debug: Check rating details before saving
+                System.Diagnostics.Debug.WriteLine("Creating user rating...");
+                System.Diagnostics.Debug.WriteLine($"UserId: {userId}");
+                System.Diagnostics.Debug.WriteLine($"RaterId: {raterId}");
+                System.Diagnostics.Debug.WriteLine($"RatingValue: {model.RatingValue}");
+                System.Diagnostics.Debug.WriteLine($"Comment: {model.Comment}");
 
+                // Create a new UserRatings object
                 var userRating = new UserRatings
                 {
-                    RatedUserId = model.RatedUserId,
-                    RaterId = raterId, // Assign the logged-in user as the rater
+                    UserId = userId,
+                    RaterId = raterId,  // Set the RaterId based on the logged-in supplier
                     RatingValue = model.RatingValue,
                     Comment = model.Comment,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 };
 
-                db.UserRatings.Add(userRating);
-                db.SaveChanges();
+                try
+                {
+                    // Add the rating to the database
+                    db.UserRatings.Add(userRating);
+                    db.SaveChanges(); // Attempt to save to the database
+                    System.Diagnostics.Debug.WriteLine("User rating successfully saved to the database.");
 
-                // Mark OTP as used
-                otpEntry.IsUsed = true;
-                db.SaveChanges();
+                    // Mark OTP as used
+                    otpEntry.IsUsed = true;
+                    db.SaveChanges(); // Save the change to OTP status
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    // Log any exceptions that occur during the SaveChanges call
+                    System.Diagnostics.Debug.WriteLine("Error during SaveChanges: " + ex.Message);
+                    System.Diagnostics.Debug.WriteLine("Stack Trace: " + ex.StackTrace);
+                    ModelState.AddModelError("", "Error saving the rating. Please try again.");
+                }
             }
 
-            ViewBag.RatedUserId = new SelectList(db.Users, "UserId", "UserName", model.RatedUserId);
+            // If ModelState is not valid or saving fails, return the form with errors
             return View(model);
         }
+
+
+
+
 
 
 
