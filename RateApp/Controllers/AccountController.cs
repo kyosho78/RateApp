@@ -31,6 +31,17 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
         {
             if (ModelState.IsValid)
             {
+                // Check if the user or supplier already exists by email or username
+                var existingUser = db_context.Users.FirstOrDefault(u => u.Email == model.Email || u.UserName == model.UserName);
+                var existingSupplier = db_context.Suppliers.FirstOrDefault(s => s.Email == model.Email || s.SupplierName == model.UserName);
+
+                if (existingUser != null || existingSupplier != null)
+                {
+                    // Store a message in TempData to be displayed in the view
+                    TempData["ErrorMessage"] = "An account with this email or username already exists. Please log in.";
+                    return RedirectToAction("Login", "Account");
+                }
+
                 var passwordHash = HashPassword(model.PasswordHash);
 
                 if (model.IsSupplier)
@@ -70,6 +81,8 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
 
             return View(model);
         }
+
+
 
         private string HashPassword(string password)
         {

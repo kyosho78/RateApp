@@ -26,55 +26,62 @@ else if (userRole.ToString() == "Supplier")
 }
 
 <main>
-    @if (userRole == null)
-    {
-        <div>
-            <p>Kirjaudu sisään, jotta voit antaa tai vastaanottaa suosituksia.</p>
-        </div>
-    }
-    else if (userRole.ToString() == "User")
-    {
-        <!-- Show Supplier Rating Section for Regular Users -->
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Suosittele suosittelijaa!</h2>
-            <p>
-                Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.
-                Sinun tulee ensin rekisteröityä ja kirjautua sisään.
-                Sen jälkeen voit sekä antaa suosituksia että lukea muiden antamia suosituksia.
-                Muista aina kysyä suosituksen saaneelta henkilöltä, onko hän antanut luvan suosituksen antamiseen.
-                Henkilö antaa sinulle käyttäjätunnuksen ja kertakäyttöisen koodin, joilla pääset antamaan suosituksen.
-            </p>
-            <a href="/SupplierRatings/Create" class="btn btn-outline-dark">Anna suositus</a>
-        </section>
-    }
-    else if (userRole.ToString() == "Supplier")
-    {
-        <!-- Show User Rating Section for Suppliers -->
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Suosittele hakijaa</h2>
-            <p>
-                Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.
-                Sinun tulee ensin rekisteröityä ja kirjautua sisään.
-                Sen jälkeen voit sekä antaa suosituksia että lukea muiden antamia suosituksia.
-                Muista aina kysyä suosituksen saaneelta henkilöltä, onko hän antanut luvan suosituksen antamiseen.
-                Henkilö antaa sinulle käyttäjätunnuksen ja kertakäyttöisen koodin, joilla pääset antamaan suosituksen.
-            </p>
-            <a href="/UserRatings/Create" class="btn btn-outline-dark">Anna suositus</a>
-        </section>
-    }
+    <div class="row">
+
+        @if (userRole == null)
+        {
+            <div>
+                <p>Kirjaudu sisään, jotta voit antaa tai vastaanottaa suosituksia.</p>
+            </div>
+        }
+        else if (userRole.ToString() == "User")
+        {
+            <!-- Show Supplier Rating Section for Regular Users -->
+            <section class="col-md-4">
+                <h2>Suosittele suosittelijaa!</h2>
+                <p>
+                    Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.
+                    Sinun tulee ensin rekisteröityä ja kirjautua sisään.
+                    Sen jälkeen voit sekä antaa suosituksia että lukea muiden antamia suosituksia.
+                    Muista aina kysyä suosituksen saaneelta henkilöltä, onko hän antanut luvan suosituksen antamiseen.
+                    Henkilö antaa sinulle käyttäjätunnuksen ja kertakäyttöisen koodin, joilla pääset antamaan suosituksen.
+                </p>
+                <a href="/SupplierRatings/Create" class="btn btn-outline-dark">Anna suositus</a>
+            </section>
+        }
+        else if (userRole.ToString() == "Supplier")
+        {
+            <!-- Show User Rating Section for Suppliers -->
+            <section class="col-md-4">
+                <h2>Suosittele hakijaa</h2>
+                <p>
+                    Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.
+                    Sinun tulee ensin rekisteröityä ja kirjautua sisään.
+                    Sen jälkeen voit sekä antaa suosituksia että lukea muiden antamia suosituksia.
+                    Muista aina kysyä suosituksen saaneelta henkilöltä, onko hän antanut luvan suosituksen antamiseen.
+                    Henkilö antaa sinulle käyttäjätunnuksen ja kertakäyttöisen koodin, joilla pääset antamaan suosituksen.
+                </p>
+                <a href="/UserRatings/Create" class="btn btn-outline-dark">Anna suositus</a>
+            </section>
+        }
 
 
-    @if (Session["UserId"] != null)
-    {
-        <h3>Generate an OTP</h3>
-        <p>Click below to generate a code that someone can use to rate you.</p>
-        @Html.ActionLink("Generate OTP", "GenerateOTP", "RatingOTPs", new { userId = Session["UserId"], supplierId = (int?)null }, new { @class = "btn btn-primary" })
-    }
-    else if (Session["SupplierId"] != null)
-    {
-        <h3>Generate an OTP</h3>
-        <p>Click below to generate a code that someone can use to rate you.</p>
-        @Html.ActionLink("Generate OTP", "GenerateOTP", "RatingOTPs", new { userId = (int?)null, supplierId = Session["SupplierId"] }, new { @class = "btn btn-primary" })
-    }
-
+        <!-- OTP generation for both Users and Suppliers -->
+        @if (Session["UserId"] != null)
+        {
+            <section class="col-md-4">
+                <h3>Generate an OTP</h3>
+                <p>Click below to generate a code that someone can use to rate you.</p>
+                @Html.ActionLink("Generate OTP", "GenerateOTP", "RatingOTPs", new { userId = Session["UserId"], supplierId = (int?)null }, new { @class = "btn btn-outline-dark" })
+            </section>
+        }
+        else if (Session["SupplierId"] != null)
+        {
+            <section class="col-md-4">
+                <h3>Generate an OTP</h3>
+                <p>Click below to generate a code that someone can use to rate you.</p>
+                @Html.ActionLink("Generate OTP", "GenerateOTP", "RatingOTPs", new { userId = (int?)null, supplierId = Session["SupplierId"] }, new { @class = "btn btn-outline-dark" })
+            </section>
+        }
+    </div> <!-- End of the row -->
 </main>

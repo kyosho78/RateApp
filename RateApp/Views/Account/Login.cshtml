@@ -5,6 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+
 <h1>Hei! Tervetuloa Suosittelija.fi sivuille!</h1>
 <p>Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.</p>
 <p>Rekisteröidy ja kirjaudu sisään, jotta voit antaa suosituksia ja lukea muiden antamia suosituksia.</p>
