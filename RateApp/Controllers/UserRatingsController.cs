@@ -28,7 +28,11 @@ namespace RateApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserRatings userRatings = db.UserRatings.Find(id);
+            // Include the related rater (which is a user)
+            UserRatings userRatings = db.UserRatings
+                                        .Include(u => u.Users1)  // Assuming Users1 is the supplier/rater
+                                        .FirstOrDefault(u => u.RatingId == id);
+
             if (userRatings == null)
             {
                 return HttpNotFound();

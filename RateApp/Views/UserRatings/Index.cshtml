@@ -5,6 +5,9 @@
 }
 
 <h2>User Ratings</h2>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
 
 <table class="table">
     <thead>
@@ -23,9 +26,9 @@
                 <td>@rating.RatingValue</td>
                 <td>@rating.Comment</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = rating.RatingId }) |
-                    @Html.ActionLink("Details", "Details", new { id = rating.RatingId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = rating.RatingId })
+
+                    @Html.ActionLink("Details", "Details", new { id = rating.RatingId })
+
                 </td>
             </tr>
         }

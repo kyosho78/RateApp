@@ -66,6 +66,26 @@ else if (userRole.ToString() == "Supplier")
         }
 
 
+        @if (Session["UserId"] != null)
+        {
+            <section class="col-md-4">
+                <h3>Suositukset</h3>
+                <p>Täällä voit lukea sinun suosituksista.</p>
+                @Html.ActionLink("Suositukset", "Index", "UserRatings", new { id = Session["UserId"] }, new { @class = "btn btn-outline-dark" })
+
+            </section>
+        }
+        else if (Session["SupplierId"] != null)
+        {
+            <section class="col-md-4">
+                <h3>Suositukset</h3>
+                <p>Täällä voit lukea sinun suosituksista.</p>
+                @Html.ActionLink("Suositukset", "Index", "SupplierRatings", new { id = Session["SupplierId"] }, new { @class = "btn btn-outline-dark" })
+
+            </section>
+        }
+
+
         <!-- OTP generation for both Users and Suppliers -->
         @if (Session["UserId"] != null)
         {
