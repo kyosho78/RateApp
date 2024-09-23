@@ -20,6 +20,7 @@ namespace RateApp.Models
             this.Logins = new HashSet<Logins>();
             this.RatingOTPs = new HashSet<RatingOTPs>();
             this.SupplierRatings = new HashSet<SupplierRatings>();
+            this.UserRatings = new HashSet<UserRatings>();
         }
     
         public int SupplierId { get; set; }
@@ -40,5 +41,7 @@ namespace RateApp.Models
         public virtual ICollection<RatingOTPs> RatingOTPs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupplierRatings> SupplierRatings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRatings> UserRatings { get; set; }
     }
 }

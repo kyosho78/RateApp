@@ -20,6 +20,7 @@
         <AssociationConnector Association="RatingDBModel.FK__SupplierR__Suppl__7D439ABD" />
         <AssociationConnector Association="RatingDBModel.FK__UserRatin__Rater__76969D2E" />
         <AssociationConnector Association="RatingDBModel.FK__UserRatin__UserI__778AC167" />
+        <AssociationConnector Association="RatingDBModel.FK_UserRatings_Suppliers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

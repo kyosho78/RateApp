@@ -18,13 +18,11 @@ namespace RateApp.Models
         public int RaterId { get; set; }
         public int UserId { get; set; }
         public int RatingValue { get; set; }
-        public object RatedUserId { get; internal set; }
         public string Comment { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<System.DateTime> UpdatedAt { get; set; }
     
         public virtual Users Users { get; set; }
-        public virtual Users Users1 { get; set; }
-
+        public virtual Suppliers Suppliers { get; set; }
     }
 }

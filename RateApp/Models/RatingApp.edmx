@@ -189,6 +189,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserRatings_Suppliers">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="UserRatings" Type="Self.UserRatings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="UserRatings">
+              <PropertyRef Name="RaterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RatingDBModelStoreContainer">
           <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RatingOTPs" EntityType="Self.RatingOTPs" Schema="dbo" store:Type="Tables" />
@@ -227,6 +239,10 @@
           </AssociationSet>
           <AssociationSet Name="FK__UserRatin__UserI__778AC167" Association="Self.FK__UserRatin__UserI__778AC167">
             <End Role="Users" EntitySet="Users" />
+            <End Role="UserRatings" EntitySet="UserRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRatings_Suppliers" Association="Self.FK_UserRatings_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="UserRatings" EntitySet="UserRatings" />
           </AssociationSet>
         </EntityContainer>
@@ -272,6 +288,10 @@
           </AssociationSet>
           <AssociationSet Name="FK__UserRatin__UserI__778AC167" Association="RatingDBModel.FK__UserRatin__UserI__778AC167">
             <End Role="Users" EntitySet="Users" />
+            <End Role="UserRatings" EntitySet="UserRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRatings_Suppliers" Association="RatingDBModel.FK_UserRatings_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="UserRatings" EntitySet="UserRatings" />
           </AssociationSet>
         </EntityContainer>
@@ -333,6 +353,7 @@
           <NavigationProperty Name="Logins" Relationship="RatingDBModel.FK__Logins__Supplier__46E78A0C" FromRole="Suppliers" ToRole="Logins" />
           <NavigationProperty Name="RatingOTPs" Relationship="RatingDBModel.FK__RatingOTP__Suppl__71D1E811" FromRole="Suppliers" ToRole="RatingOTPs" />
           <NavigationProperty Name="SupplierRatings" Relationship="RatingDBModel.FK__SupplierR__Suppl__7D439ABD" FromRole="Suppliers" ToRole="SupplierRatings" />
+          <NavigationProperty Name="UserRatings" Relationship="RatingDBModel.FK_UserRatings_Suppliers" FromRole="Suppliers" ToRole="UserRatings" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -356,7 +377,7 @@
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Users" Relationship="RatingDBModel.FK__UserRatin__Rater__76969D2E" FromRole="UserRatings" ToRole="Users" />
-          <NavigationProperty Name="Users1" Relationship="RatingDBModel.FK__UserRatin__UserI__778AC167" FromRole="UserRatings" ToRole="Users" />
+          <NavigationProperty Name="Suppliers" Relationship="RatingDBModel.FK_UserRatings_Suppliers" FromRole="UserRatings" ToRole="Suppliers" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -472,6 +493,18 @@
             </Principal>
             <Dependent Role="UserRatings">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRatings_Suppliers">
+          <End Type="RatingDBModel.Suppliers" Role="Suppliers" Multiplicity="1" />
+          <End Type="RatingDBModel.UserRatings" Role="UserRatings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="UserRatings">
+              <PropertyRef Name="RaterId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

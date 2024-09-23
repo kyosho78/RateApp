@@ -17,7 +17,7 @@ namespace RateApp.Controllers
         // GET: UserRatings
         public ActionResult Index()
         {
-            var userRatings = db.UserRatings.Include(u => u.Users).Include(u => u.Users1);
+            var userRatings = db.UserRatings.Include(u => u.Users).Include(s=> s.Suppliers);
             return View(userRatings.ToList());
         }
 
@@ -30,7 +30,7 @@ namespace RateApp.Controllers
             }
             // Include the related rater (which is a user)
             UserRatings userRatings = db.UserRatings
-                                        .Include(u => u.Users1)  // Assuming Users1 is the supplier/rater
+                                        .Include(s => s.Suppliers)  // Assuming Users1 is the supplier/rater
                                         .FirstOrDefault(u => u.RatingId == id);
 
             if (userRatings == null)
