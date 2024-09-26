@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RateApp.Models;
+using Rotativa;
 
 namespace RateApp.Controllers
 {
@@ -205,6 +206,31 @@ namespace RateApp.Controllers
             db.SupplierRatings.Remove(supplierRatings);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult DownloadIndexAsPdf()
+        {
+            // Fetch all ratings for the current user (adjust user ID retrieval based on your authentication method)
+            var supplierId = Convert.ToInt32(Session["SupplierId"]); // Get the current user ID from session or context
+
+            // Ensure that `userId` is correctly defined. If you don't have a user context, remove this filter.
+            List<SupplierRatings> allRatings = db.SupplierRatings
+                .Include(r => r.Suppliers)  // Including related suppliers
+                .Include(u => u.Users)  // Including related users
+                .Where(r => r.SupplierId == supplierId)  // Fetch ratings for the logged-in user
+                .ToList();
+
+            // Check if there are no ratings and return a 404 error if none exist
+            if (allRatings == null || allRatings.Count == 0)
+            {
+                return HttpNotFound("No ratings found.");
+            }
+
+            // Use Rotativa to return the Index view as a PDF
+            return new ViewAsPdf("Index", allRatings)
+            {
+                FileName = "SupplierRatings.pdf"
+            };
         }
 
         protected override void Dispose(bool disposing)
