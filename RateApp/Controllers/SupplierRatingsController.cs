@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using RateApp.Models;
 using Rotativa;
 
@@ -18,8 +19,30 @@ namespace RateApp.Controllers
         // GET: SupplierRatings
         public ActionResult Index()
         {
-            var supplierRatings = db.SupplierRatings.Include(s => s.Users).Include(s => s.Suppliers);
-            return View(supplierRatings.ToList());
+            // Check if the SupplierId exists in the session
+            if (Session["SupplierId"] == null)
+            {
+                // Redirect to login page or show an error if the supplier is not logged in
+                return RedirectToAction("Login", "Account");  // Redirect to the login page or any appropriate action
+            }
+
+            // Retrieve the SupplierId from the session
+            int supplierId = (int)Session["SupplierId"];
+
+            // Filter the supplierRatings by the logged-in supplier's ID
+            var supplierRatings = db.SupplierRatings
+                                    .Include(s => s.Users)
+                                    .Include(s => s.Suppliers)
+                                    .Where(s => s.SupplierId == supplierId)
+                                    .ToList();
+
+            // Check if there are any ratings
+            if (!supplierRatings.Any())
+            {
+                ViewBag.Message = "Ei arvosteluita!";
+            }
+
+            return View(supplierRatings);
         }
 
         // GET: SupplierRatings/Details/5

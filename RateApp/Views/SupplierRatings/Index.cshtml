@@ -5,32 +5,42 @@
 }
 
 <h2>Minun arvostelut</h2>
+
 <p>
     @Html.ActionLink("Aloitus sivulle", "Index")
 </p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Käyttäjä</th>
-            <th>Arvostelu</th>
-            <th>Viesti</th>
-            <th>Arvostelija</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var rating in Model)
-        {
+@if (!Model.Any())
+{
+    <div class="alert alert-info" role="alert">
+        @ViewBag.Message  <!-- The message passed from the controller -->
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@rating.Suppliers.SupplierName</td>
-                <td>@rating.RatingValue</td>
-                <td>@rating.Comment</td>
-                <td>@rating.Users.UserName</td>
-                <td>
+                <th>Käyttäjä</th>
+                <th>Arvostelu</th>
+                <th>Viesti</th>
+                <th>Arvostelija</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var rating in Model)
+            {
+                <tr>
+                    <td>@rating.Suppliers.SupplierName</td>
+                    <td>@rating.RatingValue</td>
+                    <td>@rating.Comment</td>
+                    <td>@rating.Users.UserName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 <p>
     <a href="@Url.Action("DownloadIndexAsPdf", "SupplierRatings")" class="btn btn-outline-dark">
         Lataa kaikki arvostelut PDF muodossa

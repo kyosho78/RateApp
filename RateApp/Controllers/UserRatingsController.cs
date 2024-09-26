@@ -18,8 +18,30 @@ namespace RateApp.Controllers
         // GET: UserRatings
         public ActionResult Index()
         {
-            var userRatings = db.UserRatings.Include(u => u.Users).Include(s=> s.Suppliers);
-            return View(userRatings.ToList());
+            // Check if the UserId exists in the session
+            if (Session["UserId"] == null)
+            {
+                // Redirect to login page or show an error if the user is not logged in
+                return RedirectToAction("Login", "Account");  // Redirect to the login page or any appropriate action
+            }
+
+            // Retrieve the UserId from the session
+            int UserId = (int)Session["UserId"];
+
+            // Filter the userRatings by the logged-in user's ID
+            var userRatings = db.UserRatings
+                                    .Include(s => s.Users)
+                                    .Include(s => s.Suppliers)
+                                    .Where(s => s.UserId == UserId)
+                                    .ToList();
+
+            // Check if there are any ratings
+            if (!userRatings.Any())
+            {
+                ViewBag.Message = "Ei arvosteluita!";
+            }
+
+            return View(userRatings);
         }
 
         // GET: UserRatings/Details/5
