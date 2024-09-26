@@ -14,54 +14,61 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        @Html.LabelFor(m => m.UserName)
-        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.UserName)
+        @Html.LabelFor(m => m.FirstName, "Etunimi:")
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FirstName)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Email)
+        @Html.LabelFor(m => m.LastName, "Sukunimi:")
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.LastName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, "Sähköposti")
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Email)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.PasswordHash)
+        @Html.LabelFor(m => m.PasswordHash, "Salasana:")
         @Html.PasswordFor(m => m.PasswordHash, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.PasswordHash)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.PhoneNumber)
+        @Html.LabelFor(m => m.PhoneNumber, "Puhelinumero:")
         @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.PhoneNumber)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Address)
+        @Html.LabelFor(m => m.Address, "Osoite")
         @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Address)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.City)
+        @Html.LabelFor(m => m.City, "Postitoimipaikka")
         @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.City)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Country)
+        @Html.LabelFor(m => m.Country, "Maa")
         @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Country)
-    </div>
+    </div><br/>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.IsSupplier, "Are you a Supplier?")
+        <p>Jos olet Vuokraisäntä tai työnantaja, laita rasti ruutuun!</p>
+        @Html.LabelFor(m => m.IsSupplier, "Oletko Vuokraisäntä/Työnantaja?")
         @Html.CheckBoxFor(m => m.IsSupplier, new { @class = "form-check-input" })
         @Html.ValidationMessageFor(m => m.IsSupplier)
-    </div>
+    </div><br/>
 
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-primary">Rekisteröidy</button>
 }
 
 

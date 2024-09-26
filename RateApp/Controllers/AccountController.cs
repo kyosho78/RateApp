@@ -31,6 +31,9 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
         {
             if (ModelState.IsValid)
             {
+                // Combine FirstName and LastName into UserName
+                model.UserName = model.FirstName + " " + model.LastName;
+
                 // Check if the user or supplier already exists by email or username
                 var existingUser = db_context.Users.FirstOrDefault(u => u.Email == model.Email || u.UserName == model.UserName);
                 var existingSupplier = db_context.Suppliers.FirstOrDefault(s => s.Email == model.Email || s.SupplierName == model.UserName);
@@ -48,7 +51,7 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
                 {
                     var supplier = new Suppliers
                     {
-                        SupplierName = model.UserName,
+                        SupplierName = model.UserName, // Using concatenated FirstName and LastName
                         Email = model.Email,
                         PasswordHash = passwordHash,
                         PhoneNumber = model.PhoneNumber,
@@ -63,7 +66,7 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
                 {
                     var user = new Users
                     {
-                        UserName = model.UserName,
+                        UserName = model.UserName, // Using concatenated FirstName and LastName
                         Email = model.Email,
                         PasswordHash = passwordHash,
                         PhoneNumber = model.PhoneNumber,
@@ -81,6 +84,7 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
 
             return View(model);
         }
+
 
 
 
