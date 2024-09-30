@@ -2,22 +2,22 @@
     ViewBag.Title = "GenerateOTP";
 }
 
-<h2>Your One-Time Password (OTP)</h2>
-<p>Share this OTP with the person who will be rating you:</p>
+<h2>Sinun kertakäyttöinen koodisi</h2>
+<p>Jaa tämä koodi henkilölle joka haluaa antaa sinulle arvostelun.</p>
 
 <h3 id="otpText">@ViewBag.GeneratedOTP</h3> <!-- Display OTP with id for easy copy -->
 
-<button onclick="copyToClipboard()">Copy OTP</button>
+<button onclick="copyToClipboard()">Kopio koodi</button>
 
-<p>This OTP will expire in 1 day</p>
+<p>Koodi on voimassa yhden vuorokauden!</p>
 
 <script>
     function copyToClipboard() {
         var otpText = document.getElementById("otpText").innerText;
         navigator.clipboard.writeText(otpText).then(function () {
-            alert('OTP copied to clipboard');
+            alert('Koodi kopioitu työpöydälle!');
         }, function (err) {
-            alert('Error copying OTP: ' + err);
+            alert('Kopio virhe!: ' + err);
         });
     }
 </script>
