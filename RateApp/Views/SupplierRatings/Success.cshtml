@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Kiitos arvostelusta";
+}
+
+<script>
+    // Display the thank you message using a simple alert
+    alert('@TempData["SuccessMessage"]');
+
+    // Redirect to the Home Index page after the alert is acknowledged
+    window.location.href = '@Url.Action("Index", "Home")';
+</script>
+
+<h1>Kiitos arvostelusta!</h1>
+<p>Sinut ohjataan takaisin etusivulle...</p>
+

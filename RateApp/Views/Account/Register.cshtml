@@ -1,11 +1,8 @@
 ﻿@model RateApp.ViewModels.RegistrationViewModel
 
-
 @{
     ViewBag.Title = "Register";
 }
-
-
 
 <h2>Rekisteröidy</h2>
 
@@ -16,59 +13,59 @@
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName, "Etunimi:")
         @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.FirstName)
+        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.LastName, "Sukunimi:")
         @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.LastName)
+        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Email, "Sähköposti")
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Email)
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.PasswordHash, "Salasana:")
         @Html.PasswordFor(m => m.PasswordHash, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.PasswordHash)
+        @Html.ValidationMessageFor(m => m.PasswordHash, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.PhoneNumber, "Puhelinumero:")
+        @Html.LabelFor(m => m.PhoneNumber, "Puhelinnumero:")
         @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.PhoneNumber)
+        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Address, "Osoite")
         @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Address)
+        @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.City, "Postitoimipaikka")
         @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.City)
+        @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Country, "Maa")
         @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Country)
-    </div><br/>
+        @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+    </div>
+    <br />
 
-    <div class="form-group">
-        <p>Jos olet Vuokraisäntä tai työnantaja, laita rasti ruutuun!</p>
-        @Html.LabelFor(m => m.IsSupplier, "Oletko Vuokraisäntä/Työnantaja?")
+    <div class="form-group alert alert-info">
+        <p>Jos olet Vuokranantaja tai työnantaja, laita rasti ruutuun!</p>
+        @Html.LabelFor(m => m.IsSupplier, "Oletko Vuokranantaja/Työnantaja")
         @Html.CheckBoxFor(m => m.IsSupplier, new { @class = "form-check-input" })
-        @Html.ValidationMessageFor(m => m.IsSupplier)
-    </div><br/>
+        @Html.ValidationMessageFor(m => m.IsSupplier, "", new { @class = "text-danger" })
+    </div>
+    <br />
 
-    <button type="submit" class="btn btn-primary">Rekisteröidy</button>
+    <button type="submit" class="btn btn-dark">Rekisteröidy</button>
 }
-
-

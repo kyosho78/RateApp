@@ -19,20 +19,20 @@ namespace RateApp.Controllers
         public ActionResult Index()
         {
             // Check if the UserId exists in the session
-            if (Session["UserId"] == null)
+            if (Session["SupplierId"] == null)
             {
                 // Redirect to login page or show an error if the user is not logged in
                 return RedirectToAction("Login", "Account");  // Redirect to the login page or any appropriate action
             }
 
             // Retrieve the UserId from the session
-            int UserId = (int)Session["UserId"];
+            int SupplierId = (int)Session["SupplierId"];
 
             // Filter the userRatings by the logged-in user's ID
             var userRatings = db.UserRatings
                                     .Include(s => s.Users)
                                     .Include(s => s.Suppliers)
-                                    .Where(s => s.UserId == UserId)
+                                    .Where(s => s.UserId == SupplierId)
                                     .ToList();
 
             // Check if there are any ratings
@@ -45,22 +45,32 @@ namespace RateApp.Controllers
         }
 
         // GET: UserRatings/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details()
         {
-            if (id == null)
+            // Check if the UserId exists in the session
+            if (Session["UserId"] == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                // Redirect to login page or show an error if the user is not logged in
+                return RedirectToAction("Login", "Account");
             }
-            // Include the related rater (which is a user)
-            UserRatings userRatings = db.UserRatings
-                                        .Include(s => s.Suppliers)  // Assuming Users1 is the supplier/rater
-                                        .FirstOrDefault(u => u.RatingId == id);
 
-            if (userRatings == null)
+            // Retrieve the SupplierId from the session
+            int userId = (int)Session["UserId"];
+
+            // Filter the userRatings by the logged-in user's ID
+            var userRatings = db.UserRatings
+                                    .Include(s => s.Users)
+                                    .Include(s => s.Suppliers)
+                                    .Where(s => s.UserId == userId)
+                                    .ToList();
+
+            // Check if there are any ratings
+            if (!userRatings.Any())
             {
-                return HttpNotFound();
+                ViewBag.Message = "Ei arvosteluita!";
             }
-            return View(userRatings);
+
+            return View(userRatings);  // Return the list of ratings
         }
 
         // GET: UserRatings/Create
@@ -145,16 +155,21 @@ namespace RateApp.Controllers
                 otpEntry.IsUsed = true;
                 db.SaveChanges(); // Save the change to OTP status
 
-                System.Diagnostics.Debug.WriteLine("User rating successfully saved to the database.");
+                // Set a success message in TempData
+                TempData["SuccessMessage"] = "Kiitos arvostelusta!";
 
-
-
-                return RedirectToAction("Index");
+                return RedirectToAction("Success");
 
             }
 
             // If ModelState is not valid or saving fails, return the form with errors
             return View(model);
+        }
+
+
+        public ActionResult Success()
+        {
+            return View();
         }
 
 

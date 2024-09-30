@@ -41,7 +41,7 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
                 if (existingUser != null || existingSupplier != null)
                 {
                     // Store a message in TempData to be displayed in the view
-                    TempData["ErrorMessage"] = "An account with this email or username already exists. Please log in.";
+                    TempData["ErrorMessage"] = "Käyttäjä tällä sähköpostilla on jo olemassa. Ole hyvä ja kirjaudu sisään!";
                     return RedirectToAction("Login", "Account");
                 }
 
@@ -137,7 +137,7 @@ namespace RateApp.Controllers // Make sure the namespace matches your project's 
                 }
 
                 // If no user or supplier found, show error
-                ModelState.AddModelError("", "Invalid email or password.");
+                ModelState.AddModelError("", "Väärä sähköposti tai salasana!");
             }
 
             return View(model);

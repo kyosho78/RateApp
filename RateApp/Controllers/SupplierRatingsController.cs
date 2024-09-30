@@ -20,10 +20,39 @@ namespace RateApp.Controllers
         public ActionResult Index()
         {
             // Check if the SupplierId exists in the session
-            if (Session["SupplierId"] == null)
+            if (Session["UserId"] == null)
             {
                 // Redirect to login page or show an error if the supplier is not logged in
                 return RedirectToAction("Login", "Account");  // Redirect to the login page or any appropriate action
+            }
+
+            // Retrieve the SupplierId from the session
+            int userId = (int)Session["UserId"];
+
+            // Filter the supplierRatings by the logged-in supplier's ID
+            var supplierRatings = db.SupplierRatings
+                                    .Include(s => s.Users)
+                                    .Include(s => s.Suppliers)
+                                    .Where(s => s.SupplierId == userId)
+                                    .ToList();
+
+            // Check if there are any ratings
+            if (!supplierRatings.Any())
+            {
+                ViewBag.Message = "Ei arvosteluita!";
+            }
+
+            return View(supplierRatings);
+        }
+
+        // GET: SupplierRatings/Details
+        public ActionResult Details()
+        {
+            // Check if the SupplierId exists in the session
+            if (Session["SupplierId"] == null)
+            {
+                // Redirect to login page or show an error if the supplier is not logged in
+                return RedirectToAction("Login", "Account");
             }
 
             // Retrieve the SupplierId from the session
@@ -42,27 +71,9 @@ namespace RateApp.Controllers
                 ViewBag.Message = "Ei arvosteluita!";
             }
 
-            return View(supplierRatings);
+            return View(supplierRatings);  // Return the list of ratings
         }
 
-        // GET: SupplierRatings/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SupplierRatings supplierRatings = db.SupplierRatings
-                .Include(s => s.Users)  // Assuming Users is the rater
-                .Include(s => s.Suppliers)
-                .FirstOrDefault(s => s.RatingId == id);
-
-            if (supplierRatings == null)
-            {
-                return HttpNotFound();
-            }
-            return View(supplierRatings);
-        }
 
         // GET: SupplierRatings/Create
         public ActionResult Create()
@@ -134,13 +145,21 @@ namespace RateApp.Controllers
                 otpEntry.IsUsed = true;
                 db.SaveChanges();
 
-                System.Diagnostics.Debug.WriteLine("Rating successfully saved!");
+                // Set a success message in TempData
+                TempData["SuccessMessage"] = "Kiitos arvostelusta!";
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Success");
             }
 
             return View(model);
         }
+
+
+        public ActionResult Success()
+        {
+            return View();
+        }
+
 
 
 

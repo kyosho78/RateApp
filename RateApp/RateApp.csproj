@@ -368,6 +368,8 @@
     <Content Include="Views\UserRatings\Edit.cshtml" />
     <Content Include="Views\UserRatings\Index.cshtml" />
     <Content Include="Views\RatingOTPs\GenerateOTP.cshtml" />
+    <Content Include="Views\SupplierRatings\Success.cshtml" />
+    <Content Include="Views\UserRatings\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

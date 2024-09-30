@@ -1,41 +1,52 @@
-﻿@model RateApp.Models.UserRatings
+﻿@model IEnumerable<RateApp.Models.UserRatings>
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "User Ratings";
 }
 
 
 
-<div>
-    <h2>Omat arvostelut</h2>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Arvostelu:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RatingValue)
-        </dd>
-
-        <dt>
-            Viesti:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Comment)
-        </dd>
-
-        <dt>
-            Arvostelija:
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Suppliers.SupplierName)
-        </dd>
-    </dl>
-</div>
+<h2>Tässä on sinun arvostelut</h2>
 
 <p>
-    @Html.ActionLink("Takaisin lista näkymään", "Index")
+    @Html.ActionLink("Aloitus sivulle", "Index", "Home")
+</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info" role="alert">
+        @ViewBag.Message  <!-- The message passed from the controller -->
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Käyttäjä</th>
+                <th>Arvostelu</th>
+                <th>Viesti</th>
+                <th>Arvostelija</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rating in Model)
+            {
+                <tr>
+                    <td>@rating.Users.UserName</td>
+                    <td>@rating.RatingValue</td>
+                    <td>@rating.Comment</td>
+                    <td>@rating.Suppliers.SupplierName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<p>
+    <a href="@Url.Action("DownloadIndexAsPdf", "UserRatings")" class="btn btn-outline-dark">
+        Lataa kaikki arvostelut PDF muodossa
+    </a>
 </p>
 
 

@@ -38,9 +38,9 @@ else if (userRole.ToString() == "Supplier")
         {
             <!-- Show Supplier Rating Section for Regular Users -->
             <section class="col-md-4">
-                <h2>Suosittele suosittelijaa!</h2>
+                <h3>Suosittele Vuokranantajaa/Työnantajaa!</h3>
                 <p>
-                    Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.
+                    Täällä voit antaa suosituksen sinun vuokranantajalle tai työnantajalle.
                     Sinun tulee ensin rekisteröityä ja kirjautua sisään.
                     Sen jälkeen voit sekä antaa suosituksia että lukea muiden antamia suosituksia.
                     Muista aina kysyä suosituksen saaneelta henkilöltä, onko hän antanut luvan suosituksen antamiseen.
@@ -53,9 +53,9 @@ else if (userRole.ToString() == "Supplier")
         {
             <!-- Show User Rating Section for Suppliers -->
             <section class="col-md-4">
-                <h2>Suosittele hakijaa</h2>
+                <h3>Suosittele hakijaa</h3>
                 <p>
-                    Täällä voit antaa suosituksia henkilöille erilaisissa elämäntilanteissa.
+                    Täällä voit antaa suosituksen sinun hakijalle.
                     Sinun tulee ensin rekisteröityä ja kirjautua sisään.
                     Sen jälkeen voit sekä antaa suosituksia että lukea muiden antamia suosituksia.
                     Muista aina kysyä suosituksen saaneelta henkilöltä, onko hän antanut luvan suosituksen antamiseen.
@@ -71,7 +71,7 @@ else if (userRole.ToString() == "Supplier")
             <section class="col-md-4">
                 <h3>Suositukset</h3>
                 <p>Täällä voit lukea sinun suosituksista.</p>
-                @Html.ActionLink("Suositukset", "Index", "UserRatings", new { id = Session["UserId"] }, new { @class = "btn btn-outline-dark" })
+                @Html.ActionLink("Suositukset", "Details", "UserRatings", new { id = Session["UserId"] }, new { @class = "btn btn-outline-dark" })
 
             </section>
         }
@@ -80,7 +80,7 @@ else if (userRole.ToString() == "Supplier")
             <section class="col-md-4">
                 <h3>Suositukset</h3>
                 <p>Täällä voit lukea sinun suosituksista.</p>
-                @Html.ActionLink("Suositukset", "Index", "SupplierRatings", new { id = Session["SupplierId"] }, new { @class = "btn btn-outline-dark" })
+                @Html.ActionLink("Suositukset", "Details", "SupplierRatings", new { id = Session["SupplierId"] }, new { @class = "btn btn-outline-dark" })
 
             </section>
         }
@@ -90,18 +90,18 @@ else if (userRole.ToString() == "Supplier")
         @if (Session["UserId"] != null)
         {
             <section class="col-md-4">
-                <h3>Generate an OTP</h3>
-                <p>Click below to generate a code that someone can use to rate you.</p>
-                @Html.ActionLink("Generate OTP", "GenerateOTP", "RatingOTPs", new { userId = Session["UserId"], supplierId = (int?)null }, new { @class = "btn btn-outline-dark" })
+                <h3>Luo kertakäyttöinen koodi</h3>
+                <p>Paina Luo koodi nappia, niin saat kertakäyttöisen koodin, koodin voit sitten antaa henkilölle joka haluaa antaa sinulle suosituksen.</p>
+                @Html.ActionLink("Luo koodi", "GenerateOTP", "RatingOTPs", new { userId = Session["UserId"], supplierId = (int?)null }, new { @class = "btn btn-outline-dark" })
             </section>
         }
         else if (Session["SupplierId"] != null)
         {
-            <section class="col-md-4">
-                <h3>Generate an OTP</h3>
-                <p>Click below to generate a code that someone can use to rate you.</p>
-                @Html.ActionLink("Generate OTP", "GenerateOTP", "RatingOTPs", new { userId = (int?)null, supplierId = Session["SupplierId"] }, new { @class = "btn btn-outline-dark" })
-            </section>
+    <section class="col-md-4">
+        <h3>Luo kertakäyttöinen koodi</h3>
+        <p>Paina Luo koodi nappia, niin saat kertakäyttöisen koodin, koodin voit sitten antaa henkilölle joka haluaa antaa sinulle suosituksen.</p>
+        @Html.ActionLink("Luo koodi", "GenerateOTP", "RatingOTPs", new { userId = (int?)null, supplierId = Session["SupplierId"] }, new { @class = "btn btn-outline-dark" })
+    </section>
         }
     </div> <!-- End of the row -->
 </main>
