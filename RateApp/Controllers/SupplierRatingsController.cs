@@ -78,11 +78,6 @@ namespace RateApp.Controllers
         // GET: SupplierRatings/Create
         public ActionResult Create()
         {
-            if (Session["UserId"] == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            ViewBag.RaterId = new SelectList(db.Users, "UserId", "Username");
             ViewBag.SupplierId = new SelectList(db.Suppliers, "SupplierId", "SupplierName");
             return View();
         }
@@ -119,7 +114,7 @@ namespace RateApp.Controllers
 
                 if (otpEntry == null)
                 {
-                    ModelState.AddModelError("OTP", "Väärä koodi. Tarkista onko sinulla oikea koodi!");
+                    ModelState.AddModelError("", "Invalid or expired OTP.");
                     return View(model); // Show error on the view
                 }
 

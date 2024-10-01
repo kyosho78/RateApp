@@ -76,13 +76,6 @@ namespace RateApp.Controllers
         // GET: UserRatings/Create
         public ActionResult Create()
         {
-            // Check if the supplier is logged in
-            if (Session["SupplierId"] == null)
-            {
-                // Redirect to login page if the supplier is not logged in
-                return RedirectToAction("Login", "Account");
-            }
-
             ViewBag.RaterId = new SelectList(db.Users, "UserId", "UserName");
             ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName");
             return View();
@@ -130,7 +123,7 @@ namespace RateApp.Controllers
 
                 if (otpEntry == null)
                 {
-                    ModelState.AddModelError("OTP", "Väärä koodi. Tarkista onko sinulla oikea koodi!");
+                    ModelState.AddModelError("", "Invalid or expired OTP.");
                     return View(model);
                 }
 
@@ -138,7 +131,7 @@ namespace RateApp.Controllers
                 int userId = otpEntry.UserId ?? 0; // Get the user ID from the OTP
                 if (userId == 0)
                 {
-                    ModelState.AddModelError("OTP", "Väärä koodi. Tarkista onko sinulla oikea koodi!");
+                    ModelState.AddModelError("", "Invalid user ID.");
                     return View(model);
                 }
 
@@ -178,6 +171,11 @@ namespace RateApp.Controllers
         {
             return View();
         }
+
+
+
+
+
 
 
         // GET: UserRatings/Edit/5
