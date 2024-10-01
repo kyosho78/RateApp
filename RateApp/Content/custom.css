@@ -1,0 +1,7 @@
+﻿body {
+    background: url('/Content/Images/background.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    opacity: 1.0; /* Maximum opacity */
+}
