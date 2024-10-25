@@ -29,7 +29,6 @@ namespace RateApp.Models
         public virtual DbSet<RatingOTPs> RatingOTPs { get; set; }
         public virtual DbSet<SupplierRatings> SupplierRatings { get; set; }
         public virtual DbSet<Suppliers> Suppliers { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UserRatings> UserRatings { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }

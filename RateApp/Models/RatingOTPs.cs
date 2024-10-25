@@ -11,14 +11,12 @@ namespace RateApp.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class RatingOTPs
     {
         public int OTPId { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> SupplierId { get; set; }
-        [Required(ErrorMessage = "Kertakäyttöinen koodi on pakollinen!")]
         public string OTP { get; set; }
         public System.DateTime GeneratedAt { get; set; }
         public System.DateTime ExpiresAt { get; set; }
